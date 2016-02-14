@@ -8,12 +8,18 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.Switch;
 import android.widget.TimePicker;
 
+import java.util.Calendar;
+import java.util.TimeZone;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class MyActivity extends Activity
 {
+
+    public int alarmHour;  // 24-hour format
+    public int alarmMin;
+
 
     private TimePicker timePicker;
     private Switch alarmSwitch;
@@ -44,6 +50,11 @@ public class MyActivity extends Activity
         this.alarmSwitch = (Switch) findViewById(R.id.alarm_switch);
         this.timePicker = (TimePicker) findViewById(R.id.timePicker);
 
+        this.timePicker.setIs24HourView(true);
+
+        // ====================
+        // SWITCH LISTENER
+        // ====================
         alarmSwitch.setChecked(true);
         alarmSwitch.setOnCheckedChangeListener(new OnCheckedChangeListener()
         {
@@ -70,6 +81,21 @@ public class MyActivity extends Activity
                 }
             }
         });
+
+
+        // ====================
+        // TIMEPICKER LISTENER
+        // ====================
+        timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener()
+        {
+            @Override
+            public void onTimeChanged(TimePicker timePicker, int i, int i1)
+            {
+                alarmHour = i; // hour in 24-hour format
+                alarmMin = i1; // minutes
+            }
+        });
+
     }
 
     /**
@@ -93,7 +119,23 @@ public class MyActivity extends Activity
     private void checkTime()
     {
         System.out.println("check time.....  :D  ");
+        int currHour;
+        int currMin;
+
+        Calendar currentTime = Calendar.getInstance(TimeZone.getTimeZone("Canada/Pacific"));
+        currHour = currentTime.get(Calendar.HOUR_OF_DAY);
+        currMin = currentTime.get(Calendar.MINUTE);
+
+        System.out.println("currHour = " + currHour);
+        System.out.println("currMin = " + currMin);
+
+        if (this.alarmMin == currMin && this.alarmHour == currHour)
+        {
+            // play a random song form Spotify :)
+            System.out.println(" PLAY PLAY PLAY!");
+        }
     }
+
 
     /**
      * starts the ScheduledExecutor to check if alarm should go off
@@ -103,13 +145,4 @@ public class MyActivity extends Activity
         this.scheduledExecutor = Executors.newScheduledThreadPool(1);
         this.scheduledExecutor.scheduleAtFixedRate(this.runnable, 0, 1, TimeUnit.SECONDS);
     }
-
-
-
 }
-
-
-/*
-ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
-executor.scheduleAtFixedRate(helloRunnable, 0, 3, TimeUnit.SECONDS);
- */
