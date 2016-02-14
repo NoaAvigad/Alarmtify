@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:weightSum="1">
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Welcome to Alarmtify"
+            android:id="@+id/welcome_title" android:textColor="#ff2b4dff" android:textStyle="bold"
+            android:textSize="36dp"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="The Alarm That Doesn&apos;t Suckify..."
+            android:id="@+id/suckify_title" android:layout_weight="0.40"
+            android:textStyle="bold|italic" android:textSize="20dp" android:textColor="#ff40d2ff"
+            android:textAlignment="gravity" android:gravity="bottom|fill_vertical"/>
+    <TimePicker
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/timePicker"/>
+    <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:text="Alarm"
+            android:id="@+id/alarm_switch" android:checked="true" android:textOn="On" android:textOff="Off"
+            android:layout_gravity="right"/>
+</LinearLayout>
+
